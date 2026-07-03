@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SUDHANSHU RANJAN PRABHAT — Design Engineer, Wet Utility</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A121F;
+    --bg-deep:#060B13;
+    --panel:#0F1D30;
+    --panel-hi:#132540;
+    --line:rgba(127,184,224,0.14);
+    --line-soft:rgba(127,184,224,0.07);
+    --ink:#DCE8F2;
+    --ink-dim:#6E8AA6;
+    --ink-dimmer:#465B72;
+    --amber:#E8A33D;
+    --cyan:#4FC3E8;
+    --mono:'IBM Plex Mono', monospace;
+    --sans:'IBM Plex Sans', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size:40px 40px;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+  a{color:inherit;}
+  ::selection{background:var(--amber); color:var(--bg-deep);}
+
+  /* ---------- utility ---------- */
+  .wrap{max-width:1080px; margin:0 auto; padding:0 32px;}
+  .mono{font-family:var(--mono);}
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--cyan); display:flex; align-items:center; gap:10px; margin-bottom:18px;
+  }
+  .eyebrow::before{content:''; width:22px; height:1px; background:var(--cyan);}
+
+  /* ---------- dimension line (signature element) ---------- */
+  .dim{
+    display:flex; align-items:center; gap:6px; font-family:var(--mono); font-size:11px; color:var(--ink-dimmer);
+  }
+  .dim .cap{width:1px; height:8px; background:var(--ink-dimmer);}
+  .dim .rule{flex:1; height:1px; background:var(--ink-dimmer); min-width:20px; position:relative;}
+  .dim .rule::before, .dim .rule::after{
+    content:''; position:absolute; top:-3px; width:6px; height:6px; border-top:1px solid var(--ink-dimmer); border-right:1px solid var(--ink-dimmer);
+  }
+  .dim .rule::before{left:0; transform:rotate(-135deg);}
+  .dim .rule::after{right:0; transform:rotate(45deg);}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(10,18,31,0.85); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px;}
+  .brand{font-family:var(--mono); font-weight:600; font-size:15px; letter-spacing:0.05em;}
+  .brand span{color:var(--amber);}
+  .navlinks{display:flex; gap:26px; font-family:var(--mono); font-size:12px; letter-spacing:0.08em; text-transform:uppercase;}
+  .navlinks a{color:var(--ink-dim); text-decoration:none; position:relative; padding-bottom:4px; transition:color .2s;}
+  .navlinks a:hover, .navlinks a:focus-visible{color:var(--cyan);}
+  .navlinks a::after{content:''; position:absolute; bottom:0; left:0; width:0; height:1px; background:var(--cyan); transition:width .25s;}
+  .navlinks a:hover::after{width:100%;}
+  @media (max-width:760px){.navlinks{display:none;}}
+
+  /* ---------- hero ---------- */
+  header.hero{
+    padding:168px 0 96px; position:relative; border-bottom:1px solid var(--line);
+  }
+  .hero-grid{display:grid; grid-template-columns:1fr auto; gap:40px; align-items:end;}
+  h1.name{
+    font-family:var(--mono); font-weight:700; font-size:clamp(32px,6vw,68px);
+    letter-spacing:-0.01em; line-height:1.02; color:var(--ink);
+  }
+  h1.name .accent{color:var(--amber);}
+  .role{font-family:var(--sans); font-size:19px; color:var(--ink-dim); margin-top:20px; max-width:620px;}
+  .role strong{color:var(--ink); font-weight:600;}
+  .hero-meta{display:flex; flex-direction:column; gap:10px; text-align:right;}
+  .hero-meta .dim{justify-content:flex-end;}
+  .hero-tagline{margin-top:36px; max-width:680px; font-size:16px; color:var(--ink-dim);}
+  .scale-mark{margin-top:44px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  .scale-mark .dim{width:180px;}
+  .scale-mark span{font-family:var(--mono); font-size:11px; color:var(--ink-dimmer); text-transform:uppercase; letter-spacing:0.1em;}
+
+  section{padding:88px 0; border-bottom:1px solid var(--line);}
+  h2.h{font-family:var(--mono); font-size:28px; font-weight:600; letter-spacing:-0.01em; margin-bottom:44px;}
+
+  /* ---------- about / spec sheet ---------- */
+  .about-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:64px;}
+  .about-copy p{color:var(--ink-dim); font-size:16px; margin-bottom:16px; max-width:540px;}
+  .about-copy p:last-child{margin-bottom:0;}
+  .spec-sheet{background:var(--panel); border:1px solid var(--line);}
+  .spec-sheet .row{display:flex; justify-content:space-between; gap:16px; padding:16px 22px; border-bottom:1px solid var(--line); font-family:var(--mono); font-size:13px;}
+  .spec-sheet .row:last-child{border-bottom:none;}
+  .spec-sheet .row .k{color:var(--ink-dimmer); text-transform:uppercase; letter-spacing:0.08em; font-size:11px; white-space:nowrap;}
+  .spec-sheet .row .v{color:var(--cyan); font-weight:600; text-align:right;}
+  .spec-sheet .head{background:var(--panel-hi); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-dim); padding:12px 22px; border-bottom:1px solid var(--line);}
+
+  @media (max-width:820px){.about-grid{grid-template-columns:1fr;}}
+
+  /* ---------- revision history (experience) ---------- */
+  .rev-table{width:100%; border-collapse:collapse; border:1px solid var(--line); font-family:var(--mono); font-size:13px;}
+  .rev-table th{
+    background:var(--panel-hi); text-align:left; padding:12px 18px; font-size:10.5px; text-transform:uppercase;
+    letter-spacing:0.1em; color:var(--ink-dim); border-bottom:1px solid var(--line);
+  }
+  .rev-table td{padding:16px 18px; border-bottom:1px solid var(--line); border-top:1px solid transparent; vertical-align:top; color:var(--ink-dim);}
+  .rev-table tr:last-child td{border-bottom:none;}
+  .rev-table tr:hover td{background:rgba(79,195,232,0.04);}
+  .rev-table .rev-id{color:var(--amber); font-weight:600; width:44px;}
+  .rev-table .rev-role{color:var(--ink); font-weight:600;}
+  .rev-table .rev-co{color:var(--cyan);}
+  .rev-table .rev-date{white-space:nowrap; text-align:right; color:var(--ink-dimmer); font-size:12px;}
+  .rev-table-wrap{overflow-x:auto; border:1px solid var(--line);}
+  .rev-table-wrap .rev-table{border:none;}
+
+  /* ---------- skills ---------- */
+  .skill-groups{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+  .skill-group{background:var(--bg); padding:26px 24px;}
+  .skill-group h3{font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:0.1em; color:var(--amber); margin-bottom:16px;}
+  .skill-group ul{list-style:none;}
+  .skill-group li{
+    font-family:var(--mono); font-size:13.5px; color:var(--ink-dim); padding:7px 0; border-top:1px solid var(--line-soft);
+    display:flex; justify-content:space-between; gap:10px;
+  }
+  .skill-group li:first-child{border-top:none;}
+  .skill-group li .tol{color:var(--ink-dimmer); font-size:11px; white-space:nowrap;}
+  @media (max-width:820px){.skill-groups{grid-template-columns:1fr;}}
+
+  /* ---------- projects ---------- */
+  .projects{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  .card{
+    background:var(--panel); border:1px solid var(--line); position:relative; padding:28px 26px 60px;
+    transition:border-color .2s, transform .2s;
+  }
+  .card:hover{border-color:var(--cyan); transform:translateY(-2px);}
+  .card h3{font-family:var(--mono); font-size:16.5px; margin-bottom:10px; color:var(--ink);}
+  .card p{color:var(--ink-dim); font-size:14px;}
+  .card .tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:16px;}
+  .card .tags span{font-family:var(--mono); font-size:10.5px; color:var(--cyan); border:1px solid var(--line); padding:3px 8px; letter-spacing:0.05em;}
+  .titleblock{
+    position:absolute; bottom:0; left:0; right:0; border-top:1px solid var(--line);
+    display:flex; font-family:var(--mono); font-size:10px; color:var(--ink-dimmer); text-transform:uppercase; letter-spacing:0.06em;
+  }
+  .titleblock div{padding:8px 12px; border-right:1px solid var(--line); flex:1;}
+  .titleblock div:last-child{border-right:none;}
+  .titleblock b{display:block; color:var(--ink-dim); font-size:11px; margin-top:2px;}
+  @media (max-width:820px){.projects{grid-template-columns:1fr;}}
+
+  /* ---------- tool ---------- */
+  .panel{background:var(--panel); border:1px solid var(--line);}
+  .panel-head{
+    display:flex; justify-content:space-between; align-items:center; padding:16px 24px;
+    border-bottom:1px solid var(--line); background:var(--panel-hi);
+  }
+  .panel-head .pt{font-family:var(--mono); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-dim);}
+  .led{width:7px; height:7px; border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan);}
+  .tabs{display:flex; border-bottom:1px solid var(--line); overflow-x:auto;}
+  .tab{
+    flex:1; text-align:center; padding:14px 10px; font-family:var(--mono); font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--ink-dimmer); cursor:pointer; border-right:1px solid var(--line); background:none; white-space:nowrap;
+  }
+  .tab:last-child{border-right:none;}
+  .tab.active{color:var(--amber); background:rgba(232,163,61,0.06);}
+  .tool-body{padding:32px 28px;}
+  .conv-row{display:grid; grid-template-columns:1fr 44px 1fr; gap:16px; align-items:end; margin-bottom:28px;}
+  .field label{display:block; font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-dimmer); margin-bottom:8px;}
+  .field input, .field select{
+    width:100%; background:var(--bg); border:1px solid var(--line); color:var(--ink); padding:12px 14px;
+    font-family:var(--mono); font-size:15px; border-radius:0; outline:none; transition:border-color .2s;
+  }
+  .field input:focus, .field select:focus-visible{border-color:var(--cyan);}
+  .field select{cursor:pointer;}
+  .swap{
+    display:flex; align-items:center; justify-content:center; height:46px; color:var(--ink-dimmer); font-family:var(--mono); font-size:18px;
+  }
+  .result{
+    background:var(--bg); border:1px solid var(--line); padding:22px 24px; display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:10px;
+  }
+  .result .rlabel{font-family:var(--mono); font-size:11px; color:var(--ink-dimmer); text-transform:uppercase; letter-spacing:0.08em;}
+  .result .rval{font-family:var(--mono); font-size:26px; color:var(--amber); font-weight:600;}
+  .note{margin-top:18px; font-family:var(--mono); font-size:11px; color:var(--ink-dimmer);}
+  @media (max-width:600px){.conv-row{grid-template-columns:1fr; }.swap{transform:rotate(90deg); height:auto; padding:6px 0;}}
+
+  /* ---------- calculators ---------- */
+  .calc-panels{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  @media (max-width:920px){.calc-panels{grid-template-columns:1fr;}}
+  .calc-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px 18px; margin-bottom:24px;}
+  .calc-grid .field.full{grid-column:1 / -1;}
+  .results-row{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line);}
+  .results-row .rbox{background:var(--bg); padding:18px 20px;}
+  .results-row .rbox .rlabel{display:block; font-family:var(--mono); font-size:10.5px; color:var(--ink-dimmer); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;}
+  .results-row .rbox .rval{font-family:var(--mono); font-size:21px; color:var(--amber); font-weight:600;}
+  .results-row .rbox .rval small{font-size:12px; color:var(--ink-dim); font-weight:500;}
+  @media (max-width:480px){.calc-grid{grid-template-columns:1fr;}.results-row{grid-template-columns:1fr;}}
+  .formula{
+    font-family:var(--mono); font-size:12px; color:var(--cyan); background:var(--bg); border:1px solid var(--line);
+    padding:12px 16px; margin-bottom:24px; letter-spacing:0.02em; overflow-x:auto; white-space:nowrap;
+  }
+
+  /* ---------- contact / footer ---------- */
+  footer{padding:70px 0 50px;}
+  .stamp{
+    border:1px solid var(--line); display:grid; grid-template-columns:1fr 1fr 1fr;
+  }
+  .stamp div{padding:24px 26px; border-right:1px solid var(--line);}
+  .stamp div:last-child{border-right:none;}
+  .stamp .k{font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:0.1em; color:var(--ink-dimmer); margin-bottom:8px;}
+  .stamp a{font-family:var(--mono); font-size:13.5px; color:var(--cyan); text-decoration:none; word-break:break-all;}
+  .stamp a:hover{color:var(--amber);}
+  .foot-line{margin-top:36px; text-align:center; font-family:var(--mono); font-size:11px; color:var(--ink-dimmer);}
+  @media (max-width:760px){.stamp{grid-template-columns:1fr;}.stamp div{border-right:none; border-bottom:1px solid var(--line);}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">S<span>·</span>PRABHAT</div>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#tool">Converter</a>
+      <a href="#calculators">Calculators</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Water Resources &amp; Wet Utility Engineering</div>
+    <div class="hero-grid">
+      <div>
+        <h1 class="name">SUDHANSHU RANJAN<br><span class="accent">PRABHAT</span></h1>
+        <p class="role">Design Engineer — Wet Utility. I design water supply, sewerage, stormwater, and firefighting networks — from concept through IFC and authority sign-off.</p>
+      </div>
+      <div class="hero-meta">
+        <div class="dim"><div class="cap"></div><div class="rule"></div><div class="cap"></div></div>
+        <span class="mono" style="font-size:11px;color:var(--ink-dimmer);letter-spacing:.08em;">7.5+ YRS — MIDDLE EAST &amp; INDIA</span>
+      </div>
+    </div>
+    <p class="hero-tagline">Currently delivering full-cycle wet utility design for major UAE developments at Parsons Corporation, coordinating with DEWA and Dubai Municipality on schemes for Aldar and Emaar. Background spans hydrological studies, IDF curves, and 1D/2D hydraulic modelling across the UAE, Saudi Arabia, Kuwait, Bahrain, Romania, and India.</p>
+    <div class="scale-mark">
+      <div class="dim"></div>
+      <span>Head loss checked, corridor conflicts resolved</span>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="eyebrow">01 — About</div>
+    <h2 class="h">Field notes</h2>
+    <div class="about-grid">
+      <div class="about-copy">
+        <p>I design and model water supply networks, sewerage systems, stormwater drainage, irrigation networks, and firefighting infrastructure — the systems that move water where a development needs it, and away when it doesn't. My work runs the full design lifecycle: hydrological studies, IDF curve development, rainfall-runoff and discharge estimation, 1D/2D hydraulic modelling, and authority approval submissions through to Issued-for-Construction.</p>
+        <p>I've delivered this across large-scale rail, road, and urban developments in the UAE, Saudi Arabia, Kuwait, Bahrain, Romania, and India — coordinating directly with authorities like DEWA and Dubai Municipality, and developers including Aldar and Emaar.</p>
+      </div>
+      <div class="spec-sheet">
+        <div class="head">Datasheet</div>
+        <div class="row"><span class="k">Discipline</span><span class="v">Water Resources / Wet Utility</span></div>
+        <div class="row"><span class="k">Experience</span><span class="v">7.5+ yrs</span></div>
+        <div class="row"><span class="k">Education</span><span class="v">M.Tech, Environmental Eng.</span></div>
+        <div class="row"><span class="k">Based in</span><span class="v">Dubai, UAE</span></div>
+        <div class="row"><span class="k">Modelling</span><span class="v">WaterGEMS, SewerGEMS, ICM</span></div>
+        <div class="row"><span class="k">Current firm</span><span class="v">Parsons Corporation</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="eyebrow">02 — Experience</div>
+    <h2 class="h">Revision history</h2>
+    <div class="rev-table-wrap">
+      <table class="rev-table">
+        <thead>
+          <tr>
+            <th>Rev</th>
+            <th>Role &amp; Company</th>
+            <th>Location</th>
+            <th style="text-align:right;">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="rev-id">E</td>
+            <td><span class="rev-role">Design Engineer – Wet Utility</span><br><span class="rev-co">Parsons Corporation</span></td>
+            <td>Dubai, UAE</td>
+            <td class="rev-date">03/2025 — Present</td>
+          </tr>
+          <tr>
+            <td class="rev-id">D</td>
+            <td><span class="rev-role">Design Engineer – Water</span> (project-based)<br><span class="rev-co">TYPSA</span></td>
+            <td>Gurugram, India</td>
+            <td class="rev-date">09/2024 — 03/2025</td>
+          </tr>
+          <tr>
+            <td class="rev-id">C</td>
+            <td><span class="rev-role">Design Engineer – Wet Utility</span><br><span class="rev-co">EGIS Design Center India</span></td>
+            <td>Gurugram, India</td>
+            <td class="rev-date">06/2023 — 09/2024</td>
+          </tr>
+          <tr>
+            <td class="rev-id">B</td>
+            <td><span class="rev-role">Hydraulic Design Engineer</span><br><span class="rev-co">SMEC India Pvt. Ltd.</span></td>
+            <td>Gurugram, India</td>
+            <td class="rev-date">09/2021 — 05/2023</td>
+          </tr>
+          <tr>
+            <td class="rev-id">A</td>
+            <td><span class="rev-role">Engineer – Water</span><br><span class="rev-co">WSD Consultant Pvt. Ltd.</span></td>
+            <td>Noida, India</td>
+            <td class="rev-date">10/2018 — 08/2021</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="eyebrow">03 — Skills</div>
+    <h2 class="h">Tolerances &amp; specifications</h2>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <h3>Hydraulic Modelling</h3>
+        <ul>
+          <li>WaterGEMS <span class="tol">supply</span></li>
+          <li>SewerGEMS <span class="tol">sewer/drain</span></li>
+          <li>InfoWorks ICM <span class="tol">1D/2D</span></li>
+          <li>InfoDrainage <span class="tol">stormwater</span></li>
+          <li>HY-8 / Culvert Master <span class="tol">culverts</span></li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3>GIS &amp; CAD</h3>
+        <ul>
+          <li>Civil 3D <span class="tol">design</span></li>
+          <li>AutoCAD <span class="tol">drafting</span></li>
+          <li>QGIS <span class="tol">spatial</span></li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3>Design Domains</h3>
+        <ul>
+          <li>Water supply networks <span class="tol">IFC</span></li>
+          <li>Sewerage &amp; stormwater <span class="tol">IFC</span></li>
+          <li>Irrigation &amp; firefighting <span class="tol">IFC</span></li>
+          <li>IDF curves &amp; hydrology <span class="tol">rainfall-runoff</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="eyebrow">04 — Projects</div>
+    <h2 class="h">Selected work</h2>
+    <div class="projects">
+      <div class="card">
+        <h3>Aldar &amp; Emaar Wet Utility Design</h3>
+        <p>Full-cycle water supply, irrigation, firefighting, and sewerage design across 4+ UAE developments, concept through IFC, with zero authority rejections on first submission.</p>
+        <div class="tags"><span>Water Supply</span><span>Sewerage</span><span>DEWA / DM</span></div>
+        <div class="titleblock">
+          <div>Client<b>Aldar / Emaar</b></div>
+          <div>Firm<b>Parsons</b></div>
+          <div>Status<b>Ongoing</b></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>NEOM Interchange 3 Drainage</h3>
+        <p>Compliant drainage strategy addressing gully systems, scour protection, and riprap sizing using SewerGEMS, signed off to NEOM's design standards.</p>
+        <div class="tags"><span>Drainage</span><span>SewerGEMS</span><span>Scour Design</span></div>
+        <div class="titleblock">
+          <div>Country<b>Saudi Arabia</b></div>
+          <div>Firm<b>EGIS</b></div>
+          <div>Status<b>Complete</b></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Etihad Rail Depot Stormwater Study</h3>
+        <p>End-to-end hydrological and hydraulic analysis, drainage capacity evaluation, and BOQ preparation for a rail depot culvert study, delivered within a 6-month engagement.</p>
+        <div class="tags"><span>Hydrology</span><span>Culverts</span><span>BOQ</span></div>
+        <div class="titleblock">
+          <div>Location<b>Abu Dhabi</b></div>
+          <div>Firm<b>TYPSA</b></div>
+          <div>Status<b>Complete</b></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Shuwaikh Port Water Redesign</h3>
+        <p>Assessed and redesigned water supply and stormwater systems by analysing existing transmission mains, producing a new clear water transmission design and zoning plan.</p>
+        <div class="tags"><span>WaterGEMS</span><span>Transmission</span><span>Zoning</span></div>
+        <div class="titleblock">
+          <div>Country<b>Kuwait</b></div>
+          <div>Firm<b>SMEC</b></div>
+          <div>Status<b>Complete</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tool">
+  <div class="wrap">
+    <div class="eyebrow">05 — Tool</div>
+    <h2 class="h">Hydraulic field converter</h2>
+    <div class="panel">
+      <div class="panel-head">
+        <span class="pt">Water Resources Conversion Instrument</span>
+        <div class="led" id="led"></div>
+      </div>
+      <div class="tabs" id="tabs"></div>
+      <div class="tool-body">
+        <div class="conv-row">
+          <div class="field">
+            <label for="fromVal">Value</label>
+            <input type="number" id="fromVal" value="1" step="any">
+          </div>
+          <div></div>
+          <div class="field">
+            <label for="toUnit">Convert to</label>
+            <select id="toUnit"></select>
+          </div>
+        </div>
+        <div class="conv-row" style="margin-top:-12px;">
+          <div class="field">
+            <label for="fromUnit">From unit</label>
+            <select id="fromUnit"></select>
+          </div>
+          <div class="swap">⇌</div>
+          <div class="field" style="visibility:hidden;"></div>
+        </div>
+        <div class="result">
+          <span class="rlabel">Result</span>
+          <span class="rval" id="resultVal">—</span>
+        </div>
+        <p class="note" id="factorNote">1 unit = base factor shown here.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="calculators">
+  <div class="wrap">
+    <div class="eyebrow">06 — Calculators</div>
+    <h2 class="h">Pipe design calculators</h2>
+    <div class="calc-panels">
+
+      <div class="panel">
+        <div class="panel-head">
+          <span class="pt">Manning's — Pipe Flow (Full)</span>
+          <div class="led"></div>
+        </div>
+        <div class="tool-body">
+          <div class="formula">V = (1/n)·R<sup>2/3</sup>·S<sup>1/2</sup> &nbsp; · &nbsp; Q = V·A &nbsp; · &nbsp; R = D/4</div>
+          <div class="calc-grid">
+            <div class="field">
+              <label for="mnDia">Pipe diameter (mm)</label>
+              <input type="number" id="mnDia" value="450" step="any" min="0">
+            </div>
+            <div class="field">
+              <label for="mnSlope">Slope (%)</label>
+              <input type="number" id="mnSlope" value="0.5" step="any" min="0">
+            </div>
+            <div class="field">
+              <label for="mnMat">Material</label>
+              <select id="mnMat">
+                <option value="0.010">PVC (0.010)</option>
+                <option value="0.012">HDPE / corrugated (0.012)</option>
+                <option value="0.013" selected>Concrete (0.013)</option>
+                <option value="0.013">Vitrified clay (0.013)</option>
+                <option value="0.013">Cast iron (0.013)</option>
+                <option value="0.015">Brick (0.015)</option>
+                <option value="0.024">Corrugated metal (0.024)</option>
+                <option value="custom">Custom n…</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="mnN">Manning's n</label>
+              <input type="number" id="mnN" value="0.013" step="any" min="0">
+            </div>
+          </div>
+          <div class="results-row">
+            <div class="rbox">
+              <span class="rlabel">Velocity</span>
+              <span class="rval" id="mnVel">— <small>m/s</small></span>
+            </div>
+            <div class="rbox">
+              <span class="rlabel">Flow capacity</span>
+              <span class="rval" id="mnFlow">— <small>L/s</small></span>
+            </div>
+          </div>
+          <p class="note" id="mnNote">Full-flowing circular pipe, SI units.</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <span class="pt">Hazen-Williams — Pipe Headloss</span>
+          <div class="led"></div>
+        </div>
+        <div class="tool-body">
+          <div class="formula">h<sub>f</sub> = 10.67·L·Q<sup>1.852</sup> / (C<sup>1.852</sup>·D<sup>4.87</sup>)</div>
+          <div class="calc-grid">
+            <div class="field">
+              <label for="hwLen">Pipe length (m)</label>
+              <input type="number" id="hwLen" value="500" step="any" min="0">
+            </div>
+            <div class="field">
+              <label for="hwDia">Diameter (mm)</label>
+              <input type="number" id="hwDia" value="300" step="any" min="0">
+            </div>
+            <div class="field">
+              <label for="hwFlow">Flow rate (L/s)</label>
+              <input type="number" id="hwFlow" value="50" step="any" min="0">
+            </div>
+            <div class="field">
+              <label for="hwMat">Material</label>
+              <select id="hwMat">
+                <option value="150">PVC / HDPE (C=150)</option>
+                <option value="140" selected>Ductile iron, new (C=140)</option>
+                <option value="130">Cast iron, new (C=130)</option>
+                <option value="120">Concrete / steel (C=120)</option>
+                <option value="100">Cast iron, aged (C=100)</option>
+                <option value="custom">Custom C…</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="hwC">Hazen-Williams C</label>
+              <input type="number" id="hwC" value="140" step="any" min="1">
+            </div>
+          </div>
+          <div class="results-row">
+            <div class="rbox">
+              <span class="rlabel">Head loss</span>
+              <span class="rval" id="hwLoss">— <small>m</small></span>
+            </div>
+            <div class="rbox">
+              <span class="rlabel">Velocity</span>
+              <span class="rval" id="hwVel">— <small>m/s</small></span>
+            </div>
+          </div>
+          <p class="note" id="hwNote">Pressure pipe flowing full, SI units.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="eyebrow">07 — Contact</div>
+    <h2 class="h">Drawing stamp</h2>
+    <div class="stamp">
+      <div>
+        <div class="k">Email</div>
+        <a href="mailto:sudhanshurprabhat@gmail.com">sudhanshurprabhat@gmail.com</a>
+      </div>
+      <div>
+        <div class="k">Phone</div>
+        <a href="tel:+971542269057">+971 54 226 9057</a>
+      </div>
+      <div>
+        <div class="k">Location</div>
+        <a href="#">Dubai, UAE</a>
+      </div>
+    </div>
+    <p class="foot-line">DRAWN BY S.R.PRABHAT — SHEET 1 OF 1 — © 2026</p>
+  </div>
+</footer>
+
+<script>
+  const UNITS = {
+    flow: {
+      label: 'Flow Rate',
+      base: 'm³/s',
+      factors: {
+        'm³/s': 1,
+        'L/s': 0.001,
+        'm³/hr': 1/3600,
+        'MLD': 1000/86400,
+        'MGD (US)': 0.0438126364,
+        'cfs': 0.0283168466,
+        'GPM (US)': 0.0000630902
+      }
+    },
+    velocity: {
+      label: 'Velocity',
+      base: 'm/s',
+      factors: { 'm/s':1, 'ft/s':0.3048, 'km/hr':0.2777777778, 'mph':0.44704 }
+    },
+    pressure: {
+      label: 'Pressure / Head',
+      base: 'Pa',
+      factors: { Pa:1, kPa:1000, bar:100000, psi:6894.757293168, atm:101325, 'm H₂O':9806.65 }
+    },
+    volume: {
+      label: 'Volume',
+      base: 'm³',
+      factors: { 'm³':1, 'L':0.001, 'ft³':0.0283168466, 'US gal':0.003785411784, 'Imp gal':0.00454609 }
+    }
+  };
+
+  const tabsEl = document.getElementById('tabs');
+  const fromUnitEl = document.getElementById('fromUnit');
+  const toUnitEl = document.getElementById('toUnit');
+  const fromValEl = document.getElementById('fromVal');
+  const resultEl = document.getElementById('resultVal');
+  const noteEl = document.getElementById('factorNote');
+
+  let activeCat = 'flow';
+
+  Object.keys(UNITS).forEach((key, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'tab' + (i === 0 ? ' active' : '');
+    btn.textContent = UNITS[key].label;
+    btn.setAttribute('type', 'button');
+    btn.addEventListener('click', () => setCategory(key, btn));
+    tabsEl.appendChild(btn);
+  });
+
+  function setCategory(key, btnEl){
+    activeCat = key;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    btnEl.classList.add('active');
+    populateUnits();
+    convert();
+  }
+
+  function populateUnits(){
+    const units = Object.keys(UNITS[activeCat].factors);
+    fromUnitEl.innerHTML = units.map(u => `<option value="${u}">${u}</option>`).join('');
+    toUnitEl.innerHTML = units.map(u => `<option value="${u}">${u}</option>`).join('');
+    fromUnitEl.selectedIndex = 0;
+    toUnitEl.selectedIndex = Math.min(1, units.length - 1);
+  }
+
+  function convert(){
+    const cat = UNITS[activeCat];
+    const val = parseFloat(fromValEl.value);
+    const fromU = fromUnitEl.value;
+    const toU = toUnitEl.value;
+    if (isNaN(val) || !fromU || !toU){
+      resultEl.textContent = '—';
+      return;
+    }
+    const baseVal = val * cat.factors[fromU];
+    const converted = baseVal / cat.factors[toU];
+    const display = Math.abs(converted) >= 1000 || (Math.abs(converted) < 0.0001 && converted !== 0)
+      ? converted.toExponential(4)
+      : trimZeros(converted.toFixed(6));
+    resultEl.textContent = `${display} ${toU}`;
+    noteEl.textContent = `1 ${fromU} = ${trimZeros((cat.factors[fromU]/cat.factors[toU]).toFixed(8))} ${toU} · base unit: ${cat.base}`;
+  }
+
+  function trimZeros(str){
+    return str.replace(/\.?0+$/, '') || '0';
+  }
+
+  [fromValEl, fromUnitEl, toUnitEl].forEach(el => el.addEventListener('input', convert));
+
+  populateUnits();
+  convert();
+
+  /* ---------- Manning's — pipe flow (full) ---------- */
+  const mnDia = document.getElementById('mnDia');
+  const mnSlope = document.getElementById('mnSlope');
+  const mnMat = document.getElementById('mnMat');
+  const mnN = document.getElementById('mnN');
+  const mnVel = document.getElementById('mnVel');
+  const mnFlow = document.getElementById('mnFlow');
+  const mnNote = document.getElementById('mnNote');
+
+  mnMat.addEventListener('change', () => {
+    if (mnMat.value !== 'custom') mnN.value = mnMat.value;
+  });
+
+  function computeManning(){
+    const D = parseFloat(mnDia.value) / 1000; // mm -> m
+    const S = parseFloat(mnSlope.value) / 100; // % -> m/m
+    const n = parseFloat(mnN.value);
+    if (!D || !S || !n || D <= 0 || S <= 0 || n <= 0){
+      mnVel.innerHTML = '— <small>m/s</small>';
+      mnFlow.innerHTML = '— <small>L/s</small>';
+      return;
+    }
+    const A = Math.PI * D * D / 4;
+    const R = D / 4;
+    const V = (1 / n) * Math.pow(R, 2/3) * Math.pow(S, 0.5);
+    const Q = V * A; // m3/s
+    mnVel.innerHTML = `${V.toFixed(3)} <small>m/s</small>`;
+    mnFlow.innerHTML = `${(Q * 1000).toFixed(2)} <small>L/s</small>`;
+    mnNote.textContent = `Q ≈ ${(Q*3600).toFixed(1)} m³/hr · A = ${A.toFixed(4)} m² · R = ${R.toFixed(4)} m`;
+  }
+
+  [mnDia, mnSlope, mnN].forEach(el => el.addEventListener('input', computeManning));
+  mnMat.addEventListener('change', computeManning);
+  computeManning();
+
+  /* ---------- Hazen-Williams — pipe headloss ---------- */
+  const hwLen = document.getElementById('hwLen');
+  const hwDia = document.getElementById('hwDia');
+  const hwFlow = document.getElementById('hwFlow');
+  const hwMat = document.getElementById('hwMat');
+  const hwC = document.getElementById('hwC');
+  const hwLoss = document.getElementById('hwLoss');
+  const hwVel = document.getElementById('hwVel');
+  const hwNote = document.getElementById('hwNote');
+
+  hwMat.addEventListener('change', () => {
+    if (hwMat.value !== 'custom') hwC.value = hwMat.value;
+  });
+
+  function computeHW(){
+    const L = parseFloat(hwLen.value);
+    const D = parseFloat(hwDia.value) / 1000; // mm -> m
+    const Q = parseFloat(hwFlow.value) / 1000; // L/s -> m3/s
+    const C = parseFloat(hwC.value);
+    if (!L || !D || !Q || !C || L <= 0 || D <= 0 || Q <= 0 || C <= 0){
+      hwLoss.innerHTML = '— <small>m</small>';
+      hwVel.innerHTML = '— <small>m/s</small>';
+      return;
+    }
+    const hf = (10.67 * L * Math.pow(Q, 1.852)) / (Math.pow(C, 1.852) * Math.pow(D, 4.8704));
+    const A = Math.PI * D * D / 4;
+    const V = Q / A;
+    hwLoss.innerHTML = `${hf.toFixed(3)} <small>m</small>`;
+    hwVel.innerHTML = `${V.toFixed(3)} <small>m/s</small>`;
+    hwNote.textContent = `Gradient ≈ ${(hf / L * 1000).toFixed(2)} m/km · velocity check: ${V < 0.6 ? 'low, risk of sedimentation' : V > 2 ? 'high, check surge/erosion' : 'within typical 0.6–2 m/s range'}`;
+  }
+
+  [hwLen, hwDia, hwFlow, hwC].forEach(el => el.addEventListener('input', computeHW));
+  hwMat.addEventListener('change', computeHW);
+  computeHW();
+</script>
+
+</body>
+</html>
